@@ -42,6 +42,18 @@ string formatLetters(const string& letters) {
     return result;               // returnează șirul formatat
 }
 
+// Funcție pentru afișarea desenului spânzurătorii
+void drawHangman(int wrong) {
+    cout << "\n";
+    cout << "  +---+\n";
+    cout << "  |   |\n";
+    cout << "  " << (wrong >= 1 ? "O" : " ") << "   |\n";
+    cout << "  " << (wrong >= 3 ? "/" : " ") << (wrong >= 2 ? "|" : " ") << (wrong >= 4 ? "\\" : " ") << "   |\n";
+    cout << "  " << (wrong >= 5 ? "/" : " ") << " " << (wrong >= 6 ? "\\" : " ") << "   |\n";
+    cout << "      |\n";
+    cout << "=========\n\n";
+}
+
 // Enumerare pentru nivelul de dificultate
 enum Difficulty { EASY = 1, MEDIUM = 2, HARD = 3 };
 
@@ -100,7 +112,7 @@ string* getWordsForDifficulty(Difficulty diff, int& count) {
         count = sizeof(mediumWords) / sizeof(mediumWords[0]);
         return mediumWords;
     }
-    else {
+    else if(diff == HARD) {
         count = sizeof(hardWords) / sizeof(hardWords[0]);
         return hardWords;
     }
@@ -151,6 +163,8 @@ int main() {
         while (wrong < max_wrong && !won && !timeExpired) {
 
             clearScreen(); // șterge ecranul
+
+            drawHangman(wrong); // afișează desenul spânzurătorii
 
             cout << "CUVANT: " << display << "\n";
             cout << "GRESITE: " << formatLetters(guessed) << "\n";
